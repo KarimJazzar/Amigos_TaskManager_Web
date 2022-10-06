@@ -16,6 +16,7 @@ a {
     text-decoration: unset;
 }
 
+textarea,
 input {
     border: unset;
     outline: unset;
@@ -23,7 +24,9 @@ input {
     padding: 10px 8px;
     margin: 10px 0;
     width: 100%;
+    resize: vertical;
 }
+
 
 button {
     border: unset;
@@ -36,6 +39,10 @@ button {
     transition: background-color 0.3s ease-in-out;
 }
 
+label {
+    color: #fff;
+}
+
 .btn-purple {
     color: #fff;
     background-color: #532DA6;
@@ -44,3 +51,25 @@ button {
 .btn-purple:hover {
     background-color: #361973;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    padding: 0 2px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #262626; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #fff; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #bbbbbb; 
+  }
