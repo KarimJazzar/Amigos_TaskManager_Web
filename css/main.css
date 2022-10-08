@@ -24,9 +24,12 @@ input {
     padding: 10px 8px;
     margin: 10px 0;
     width: 100%;
-    resize: vertical;
 }
 
+
+textarea {
+    resize: vertical;
+}
 
 button {
     border: unset;
@@ -34,6 +37,7 @@ button {
     padding: 10px 20px;
     border-radius: 5px;
     width: 100%;
+    font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
     transition: background-color 0.3s ease-in-out;
@@ -43,6 +47,15 @@ label {
     color: #fff;
 }
 
+select {
+    margin-top: 10px;
+    border: unset;
+    outline: unset;
+    padding: 10px 5px;
+    border-radius: 5px;
+    width: 100%;
+}
+
 .btn-purple {
     color: #fff;
     background-color: #532DA6;
@@ -50,6 +63,24 @@ label {
 
 .btn-purple:hover {
     background-color: #361973;
+}
+
+.btn-green {
+    color: #fff;
+    background-color: #008f29;
+}
+
+.btn-green:hover {
+    background-color: rgb(0, 113, 47);
+}
+
+.btn-red {
+    color: #fff;
+    background-color: #a20404;
+}
+
+.btn-red:hover {
+    background-color: #8b0000;
 }
 
 /* width */
