@@ -45,6 +45,7 @@ button {
 
 label {
     color: #fff;
+    display: block;
 }
 
 select {

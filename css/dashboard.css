@@ -12,6 +12,10 @@
     height: 80px;
 }
 
+#svg-temp {
+    display: none;
+}
+
 .btn-logout svg {
     width: auto;
     height: 20px;
@@ -29,6 +33,15 @@
     color: #fff;
 }
 
+.task-card svg {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 25px;
+    height: auto;
+}
+
+.task-card svg path,
 .btn-create svg path,
 .btn-logout svg path {
     fill: #fff;
@@ -73,13 +86,49 @@
     overflow: auto;
 }
 
+.time-tracker {
+    display: flex;
+    justify-content: space-around;
+}
+
+.time-tracker input {
+    width: calc(100% - 60px);
+}
+
+.time-tracker button {
+    display: inline-block;
+    width: 50px;
+    text-align: center;
+    padding: 0;
+    height: 36px;
+}
+
 .task-crud button {
     margin-top: 10px;
+}
+
+.task-crud ul {
+    color: #fff;
+    margin: 5px 0 10px;
+    padding-left: 15px;
+}
+
+.task-crud span {
+    color: #fff;
 }
 
 .task-crud h1 {
     color: #fff;
     margin: 15px 0 0;
+}
+
+.task-crud p {
+    color: #fff;
+    font-size: 15px;
+}
+
+.task-extra-margin {
+    margin-top: 10px;
 }
 
 .task-grid {
@@ -165,6 +214,18 @@
 
 .task-complete h1 {
     color: #114FF7;
+}
+
+.task-todo svg:hover path {
+    fill: #7A0FD6;
+}
+
+.task-ongoing svg:hover path {
+    fill: #541CED;
+}
+
+.task-complete svg:hover path {
+    fill: #114FF7;
 }
 
 .task-todo .task-line {

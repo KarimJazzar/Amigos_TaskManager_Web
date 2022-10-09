@@ -14,7 +14,7 @@ function login () {
     auth.signInWithEmailAndPassword(email, password).then(function() {
       // Declare user variable
       let user = auth.currentUser
-  
+  console.log(user);
       // Add this user to Firebase Database
       let database_ref = database.ref()
   
@@ -38,7 +38,7 @@ function login () {
         }
       })();
 
-      window.location = getAbsoluteUrl('./') + "home.html";
+      //window.location = getAbsoluteUrl('./') + "home.html";
   
     }).catch(function(error) {
       // Firebase will use this to alert of its errors
