@@ -1,4 +1,5 @@
 "use strict";
+
 // CRUD buttons
 let btnCreate = document.getElementById('btnCreate');
 let taskContainer = document.getElementById('taskContainer');

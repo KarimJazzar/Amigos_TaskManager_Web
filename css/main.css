@@ -92,7 +92,7 @@ select {
   
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #262626; 
+    background: transparent; 
   }
    
   /* Handle */
