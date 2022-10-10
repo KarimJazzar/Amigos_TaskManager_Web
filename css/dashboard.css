@@ -115,13 +115,16 @@
     pointer-events: none;
 }
 
+.task-crud.edit .task-edit-h1,
 .task-crud.edit .admin-track-time,
 .task-crud.edit #btnUpdate,
 .task-crud.edit #btnDelete {
     display: block;
 }
 
+.task-edit-h1,
 .admin-track-time,
+.task-crud.edit .task-create-h1,
 .task-crud.edit #btnCreate,
 #btnUpdate,
 #btnDelete {
