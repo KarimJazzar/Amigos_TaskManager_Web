@@ -1,3 +1,5 @@
+"use strict";
+
 // Set up our login function
 function login () {
     // Get all our input fields

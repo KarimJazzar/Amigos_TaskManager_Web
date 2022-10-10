@@ -1,3 +1,5 @@
+"use strict";
+
 // Set up our register function
 function register(){
     // Get all our input fields
@@ -35,7 +37,7 @@ function register(){
       // Push to Firebase Database
       database_ref.child('users/' + user.uid).set(user_data);
   
-      // DOne
+      // Done
       alert('User Created!');
 
     }).catch(function(error) {

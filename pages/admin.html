@@ -15,7 +15,7 @@
     </head>
  <body>
     <div class="user-container">
-        <button class="btn-create">
+        <button id="btnCreate" class="btn-create">
             <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" viewBox="0 0 128 128" width="64px" height="64px">   
                 <path d="M 64 6.0507812 C 49.15 6.0507812 34.3 11.7 23 23 C 0.4 45.6 0.4 82.4 23 105 C 34.3 116.3 49.2 122 64 122 C 78.8 122 93.7 116.3 105 105 C 127.6 82.4 127.6 45.6 105 23 C 93.7 11.7 78.85 6.0507812 64 6.0507812 z M 64 12 C 77.3 12 90.600781 17.099219 100.80078 27.199219 C 121.00078 47.499219 121.00078 80.500781 100.80078 100.80078 C 80.500781 121.10078 47.500781 121.10078 27.300781 100.80078 C 7.0007813 80.500781 6.9992188 47.499219 27.199219 27.199219 C 37.399219 17.099219 50.7 12 64 12 z M 64 42 C 62.3 42 61 43.3 61 45 L 61 61 L 45 61 C 43.3 61 42 62.3 42 64 C 42 65.7 43.3 67 45 67 L 61 67 L 61 83 C 61 84.7 62.3 86 64 86 C 65.7 86 67 84.7 67 83 L 67 67 L 83 67 C 84.7 67 86 65.7 86 64 C 86 62.3 84.7 61 83 61 L 67 61 L 67 45 C 67 43.3 65.7 42 64 42 z"/>
             </svg>
@@ -34,36 +34,43 @@
         </div>
     </div>
 
-    <div class="task-container">
-        <div class="task-crud">
+    <div id="taskContainer" class="task-container">
+        <div id="taskCrud" class="task-crud">
             <h1>Create Task:</h1>
             <input type="text" name="" id="taskName" placeholder="Name">
             <textarea name="description" id="taskDesc" cols="30" rows="5" placeholder="Description"></textarea>
+            
             <label for="dateStart">Start Date:</label>
             <input type="date" id="dateStart" name="dateStart" placeholder="mm/dd/yyyy">
+            
             <label for="dateEnd">Due Date:</label>
             <input type="date" id="dateEnd" name="dateEnd" placeholder="mm/dd/yyyy">
-            <label for="dateEnd">Assigned To:</label>
-            <select name="user" id="user">
+            
+            <label for="userList">Assigned To:</label>
+            <select name="userList" id="userList">
                 <option value="none">Unassignet</option>
-                <option value="none">User Name</option>
-                <option value="none">User Name</option>
-                <option value="none">User Name</option>
             </select>
+            
             <input type="text" name="" id="taskName" placeholder="Hourly rate $0">
-            <!--
-            <input type="text" name="" id="" placeholder="Status">
-            <input type="text" name="" id="" placeholder="Start Date">
-            <input type="text" name="" id="" placeholder="End Date">
-            <input type="text" name="" id="" placeholder="Assigned To">
-            <input type="text" name="" id="" placeholder="Pay Rate">
-            <input type="text" name="" id="" placeholder="Worked Hours">
-            -->
-            <button class="btn-purple">Create</button>
-            <button class="btn-green">Update</button>
-            <button class="btn-red">Delete</button>
 
-            <svg class="closeSideBar" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 252 252" style="enable-background:new 0 0 252 252;" xml:space="preserve">
+            <span class="admin-track-time">
+                <strong>
+                    <label for="taskHours">Worked Hours:</label>
+                </strong>
+                <ul id="taskHoursList">
+                    <li>1 hour</li>
+                    <li>2 hours</li>
+                </ul>
+                <strong>
+                    <label for="taskTotalHour">Total Hours: 0</label>
+                </strong>
+            </span>
+
+            <button id="btnCreate" class="btn-purple" onclick="createTask()">Create</button>
+            <button id="btnUpdate" class="btn-green">Update</button>
+            <button id="btnDelete" class="btn-red">Delete</button>
+
+            <svg id="closeSideBar" class="closeSideBar" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 252 252" style="enable-background:new 0 0 252 252;" xml:space="preserve">
                 <path d="M126,0C56.523,0,0,56.523,0,126s56.523,126,126,126s126-56.523,126-126S195.477,0,126,0z M126,234   c-59.551,0-108-48.449-108-108S66.449,18,126,18s108,48.449,108,108S185.551,234,126,234z"/><path d="M164.612,87.388c-3.515-3.515-9.213-3.515-12.728,0L126,113.272l-25.885-25.885c-3.515-3.515-9.213-3.515-12.728,0   c-3.515,3.515-3.515,9.213,0,12.728L113.272,126l-25.885,25.885c-3.515,3.515-3.515,9.213,0,12.728   c1.757,1.757,4.061,2.636,6.364,2.636s4.606-0.879,6.364-2.636L126,138.728l25.885,25.885c1.757,1.757,4.061,2.636,6.364,2.636   s4.606-0.879,6.364-2.636c3.515-3.515,3.515-9.213,0-12.728L138.728,126l25.885-25.885   C168.127,96.601,168.127,90.902,164.612,87.388z"/>
             </svg>
         </div>
@@ -71,56 +78,35 @@
         <div class="task-grid">
             <div class="task-col">
                 <h1>To-Do</h1>
-                <div class="task-todo">
+                <div class="task-stack task-todo">
+                    <!-- TASK CARD HERE -->
+                    <!-- 
                     <div class="task-card">
                         <span class="task-line"></span>
                         <h1>Task Name</h1>
                         <h4>User Name</h4>
                         <div class="due-date">
-                            <span>Due Date</span><br>
+                            <span>Due Date</span>
                             <span>08-10-2023</span>
                         </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="494.936px" height="494.936px" viewBox="0 0 494.936 494.936" style="enable-background:new 0 0 494.936 494.936;" xml:space="preserve">
+                        <svg onclick="showEditMode()" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="494.936px" height="494.936px" viewBox="0 0 494.936 494.936" style="enable-background:new 0 0 494.936 494.936;" xml:space="preserve">
                             <path d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157    c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21    s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741    c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"/>
                             <path d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069    c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963    c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692    C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107    l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005    c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"/>
                         </svg>
                     </div>
+                    -->
                 </div>
             </div>
             <div class="task-col">
                 <h1>Ongoing</h1>
-                <div class="task-ongoing">
-                    <div class="task-card">
-                        <span class="task-line"></span>
-                        <h1>Task Name</h1>
-                        <h4>User Name</h4>
-                        <div class="due-date">
-                            <span>Due Date</span><br>
-                            <span>08-10-2023</span>
-                        </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="494.936px" height="494.936px" viewBox="0 0 494.936 494.936" style="enable-background:new 0 0 494.936 494.936;" xml:space="preserve">
-                            <path d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157    c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21    s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741    c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"/>
-                            <path d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069    c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963    c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692    C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107    l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005    c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"/>
-                        </svg>
-                    </div>
+                <div class="task-stack task-ongoing">
+                    <!-- TASK CARD HERE -->
                 </div>
             </div>
             <div class="task-col">
                 <h1>Completed</h1>
                 <div class="task-complete">
-                    <div class="task-card">
-                        <span class="task-line"></span>
-                        <h1>Task Name</h1>
-                        <h4>User Name</h4>
-                        <div class="due-date">
-                            <span>Due Date</span><br>
-                            <span>08-10-2023</span>
-                        </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="494.936px" height="494.936px" viewBox="0 0 494.936 494.936" style="enable-background:new 0 0 494.936 494.936;" xml:space="preserve">
-                            <path d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157    c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21    s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741    c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"/>
-                            <path d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069    c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963    c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692    C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107    l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005    c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"/>
-                        </svg>
-                    </div>
+                    <!-- TASK CARD HERE -->
                 </div>
             </div>
         </div>
@@ -130,5 +116,8 @@
         <path d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157    c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21    s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741    c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"/>
         <path d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069    c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963    c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692    C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107    l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005    c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"/>
     </svg>
+
+    <script src="../script/main.js"></script>
+    <script src="../script/admin.js"></script>
  </body>
 </html> 

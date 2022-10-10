@@ -39,6 +39,13 @@
     display: flex;
     align-items: center;
     color: #fff;
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+}
+
+.btn-create.active {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .task-card svg {
@@ -80,6 +87,16 @@
     width: 100%;
 }
 
+.task-container.active .task-crud {
+    transform: translateX(0%);
+    pointer-events: auto;
+}
+
+.task-container.active  .task-grid {
+    left: 400px;
+    width: calc(100% - 400px);
+}
+
 .task-crud {
     width: 100%;
     height: 100%;
@@ -93,6 +110,22 @@
     border-right: solid 1px rgb(72, 72, 72);;
     border-bottom: solid 1px rgb(72, 72, 72);;
     overflow: auto;
+    transform: translateX(-100%);
+    transition: all 0.5s ease-in-out;
+    pointer-events: none;
+}
+
+.task-crud.edit .admin-track-time,
+.task-crud.edit #btnUpdate,
+.task-crud.edit #btnDelete {
+    display: block;
+}
+
+.admin-track-time,
+.task-crud.edit #btnCreate,
+#btnUpdate,
+#btnDelete {
+    display: none;
 }
 
 .time-tracker {
@@ -142,11 +175,12 @@
 
 .task-grid {
     position: absolute;
-    left: 400px;
+    left: 0px;
     top: 0;
-    width: calc(100% - 400px);
+    width: 100%;
     height: 100%;
     font-size: 0;
+    transition: all 0.5s ease-in-out;
 }
 
 .task-col {
@@ -182,6 +216,7 @@
     position: relative;
     border-radius: 5px;
     overflow: hidden;
+    margin-bottom: 10px;
 }
 
 .task-card h1 {
@@ -204,6 +239,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;    
+}
+
+.due-date span {
+    display: block;
 }
 
 .task-line {
