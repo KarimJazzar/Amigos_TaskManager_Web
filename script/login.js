@@ -1,5 +1,8 @@
 "use strict";
 
+let logAsAdmin = false;
+let userType = document.getElementById('userType');
+
 // Set up our login function
 function login () {
     // Get all our input fields
@@ -16,7 +19,7 @@ function login () {
     auth.signInWithEmailAndPassword(email, password).then(function() {
       // Declare user variable
       let user = auth.currentUser
-  console.log(user);
+
       // Add this user to Firebase Database
       let database_ref = database.ref()
   
@@ -31,14 +34,14 @@ function login () {
       // Done
       alert('User Logged In!');
 
-      let getAbsoluteUrl = (function() {
-        let a;
-        return function(url) {
-            if(!a) a = document.createElement('a');
-            a.href = url;
-            return a.href;
-        }
-      })();
+      if(logAsAdmin) {
+        // TO - DO
+        // if user chouse log as admin and has admin privileges allow it
+        window.location = "./pages/admin.html";
+      } else {
+        // Login as normal user
+        window.location = "./pages/dashboard.html";
+      }
 
       //window.location = getAbsoluteUrl('./') + "home.html";
   
@@ -53,4 +56,14 @@ function login () {
 
 function goToRegister() {
     window.location = "./pages/register.html";
+}
+
+function toggleUserType() {
+  logAsAdmin = !logAsAdmin;
+
+  if(logAsAdmin) {
+    userType.classList.add('active');
+  } else {
+    userType.classList.remove('active');
+  }
 }

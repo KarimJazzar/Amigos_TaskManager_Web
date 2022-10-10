@@ -19,7 +19,14 @@
             <span>Login</span>
             <input type="email" id="email" placeholder="Email">
             <input type="password" id="password" placeholder="Password">
+            <div id="userType" class="login-user-type" onclick="toggleUserType()">
+                <span>User</span>
+                <div class="login-user-toggle"><span></span></div>
+                <span>Admin</span>
+            </div>
+            
             <button id="btnLogin" class="btn-purple" onclick="login()">Login</button>
+            
             <a onclick="goToRegister()">Create Account</a>
         </div>
     </div>
