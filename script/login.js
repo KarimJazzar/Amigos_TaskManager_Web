@@ -5,6 +5,7 @@ let userType = document.getElementById('userType');
 
 // Set up our login function
 function login () {
+    let isAdmin = false;
     // Get all our input fields
     let email = document.getElementById('email').value
     let password = document.getElementById('password').value
@@ -30,18 +31,39 @@ function login () {
   
       // Push to Firebase Database
       database_ref.child('users/' + user.uid).update(user_data)
-  
-      // Done
-      alert('User Logged In!');
+      
+      let firebaseRef = firebase.database().ref("users");
+      firebaseRef.once("value", function(snapshot){
+        let data = snapshot.val();
+        for(let i in data){
+          if(i == user.uid){
+            isAdmin = data[i].admin;
+            //console.log(isAdmin);
+            break;
+          }
+          //console.log(i);
+          //console.log(data[i]);
+        }
 
-      if(logAsAdmin) {
-        // TO - DO
-        // if user chouse log as admin and has admin privileges allow it
-        window.location = "./pages/admin.html";
-      } else {
-        // Login as normal user
-        window.location = "./pages/dashboard.html";
-      }
+        if(logAsAdmin) {
+          console.log(isAdmin);
+          if(isAdmin == false){
+            alert("Please check that the user is a regular one!");
+          }else{
+            alert('User Logged In!');
+            window.location = "./pages/admin.html";
+          }
+          
+        } else {
+          if(isAdmin == true){
+          alert("Please check that the user is an admin!");
+          }else{
+            // Login as normal user
+            alert('User Logged In!');
+            window.location = "./pages/dashboard.html";
+          }
+        }
+      })
 
       //window.location = getAbsoluteUrl('./') + "home.html";
   
