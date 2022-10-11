@@ -182,3 +182,9 @@ function initDashboard() {
 }
 
 initDashboard();
+
+function signOut(){
+    auth.signOut().then(() => {
+        window.location = "../index.html";
+    });
+}
