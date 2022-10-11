@@ -27,6 +27,24 @@ let inputStatus = document.getElementById('taskStatus');
 let task = null;
 let tasks = [];
 let taskIndex = 0;
+let userLoggedInID = sessionStorage.getItem('userID');
+
+(function() {
+    
+    let firebaseRef = firebase.database().ref("users");
+      firebaseRef.once("value", function(snapshot){
+        let userName = "";
+        let data = snapshot.val();
+        for(let i in data){
+          if(i == userLoggedInID){
+            userName = data[i].full_name;
+            break;
+          }
+        }
+        document.getElementById('userFullName').textContent = userName;
+      })
+
+})();
 
 // Update task
 function updateTask() {
