@@ -302,3 +302,9 @@ function initAdmin() {
 }
 
 initAdmin();
+
+function signOut(){
+    auth.signOut().then(() => {
+        window.location = "../index.html";
+    });
+}
