@@ -27,7 +27,7 @@ let inputStatus = document.getElementById('taskStatus');
 let task = null;
 let tasks = [];
 let taskIndex = 0;
-let userLoggedInID = sessionStorage.getItem('userID');
+let ƒ = sessionStorage.getItem('userID');
 
 (function() {
     
@@ -48,14 +48,35 @@ let userLoggedInID = sessionStorage.getItem('userID');
 
 // Update task
 function updateTask() {
-    // TO - DO
-    // 1 - validate input hors
+
+    //TODO 
+    // check if the user is same
+
+    let tName = taskName.value;
+    let tDesc = taskDesc.value;
+    let tStart = taskStart.value.toString();
+    let tEnd  = taskEnd.value.toString();
+    let tUser = taskUser.value;
+    let tRate = taskRate.value;
+    let iHour = inputHour.value;
+    let iStatus = inputStatus.value;
+
+    if(iStatus==0){
+        alert("Please change the status of the task, if it's started");
+
+    }
+    else {
+        
+    }
+
     // 2 - check if status change
     // 3 - create ref of DB
     // 4 - perform update
     // NOTE:
     // to save the time we are using an array
     // time_tracked : []
+
+
 }
 
 // Load task data for edit mode
