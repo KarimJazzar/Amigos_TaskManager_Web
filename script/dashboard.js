@@ -28,6 +28,7 @@ let task = null;
 let tasks = [];
 let taskIndex = 0;
 let ƒ = sessionStorage.getItem('userID');
+let taskID = null;
 
 (function() {
     
@@ -66,10 +67,12 @@ function updateTask() {
 
     }
     else {
-        
+         // Create DB ref
+         let database_ref = database.ref();
+
+         
     }
 
-    // 2 - check if status change
     // 3 - create ref of DB
     // 4 - perform update
     // NOTE:
@@ -83,6 +86,8 @@ function updateTask() {
 function setInputValues(userIndex) {
     taskIndex = userIndex;
     let tempTask = tasks[userIndex];
+    //getting current task id
+    taskID = tempTask.id;
     
     taskName.innerHTML = tempTask.name;
     taskDesc.innerHTML = tempTask.description;
