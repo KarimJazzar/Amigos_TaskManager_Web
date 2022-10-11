@@ -31,7 +31,8 @@ function register(){
       let user_data = {
         email : email,
         full_name : full_name,
-        last_login : Date.now()
+        last_login : Date.now(),
+        admin : false
       };
   
       // Push to Firebase Database
