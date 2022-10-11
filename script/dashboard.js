@@ -29,6 +29,7 @@ let tasks = [];
 let taskIndex = 0;
 let ƒ = sessionStorage.getItem('userID');
 let taskID = null;
+let taskHoursInput = [];
 
 (function() {
     
@@ -46,6 +47,28 @@ let taskID = null;
       })
 
 })();
+
+//add worked hours
+
+function addHours(){
+
+    hoursList.innerHTML = "";
+    taskHoursInput.push(inputHour.value);
+
+        for (var i = 0; i < taskHoursInput.length; i++) {
+            // Create DOM element
+            var li = document.createElement('li');
+                
+            // Set text of element
+            li.textContent = taskHoursInput[i];
+        
+            // Append this element to its parent
+            hoursList.appendChild(li);
+          } 
+
+    inputHour.value = "";
+    
+}
 
 // Update task
 function updateTask() {
@@ -70,7 +93,31 @@ function updateTask() {
          // Create DB ref
          let database_ref = database.ref();
 
-         
+         // Create task object
+         task = {
+            name: tName,
+            description: tDesc,
+            status: iStatus,
+            start_date: tStart,
+            due_date: tEnd,
+            user: {
+                id: users[tUser].id,
+                name: users[tUser].full_name
+            },
+            pay_rate: tRate,
+            time_tracked: [],
+            complete_date: "",
+            created_by: ""
+        };
+        
+        // Store task object
+        database_ref.child('taks').push(task);
+
+        // Clear inputs
+        clearInputs();
+
+        // Show alert (temporal solution)
+        alert("Task created.");
     }
 
     // 3 - create ref of DB
@@ -98,8 +145,11 @@ function setInputValues(userIndex) {
     taskRate.innerHTML = tempTask.pay_rate;
 
     if(taskRate.hasOwnProperty('time_tracked')) {
-        // TO - DO
-        // Wait until user can push time
+            // for (var i = 0; i < tempTask.time_tracked.length; i++){ 
+            //     hoursList.innerHTML = "";
+            //     hoursList.appendChild(tempTask.time_tracked);
+            // }
+
     } else {
         let noHour = document.createElement('li');
         noHour.innerHTML = "No Time Posted";
