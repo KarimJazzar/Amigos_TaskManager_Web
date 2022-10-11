@@ -46,11 +46,11 @@ function login () {
         }
 
         if(logAsAdmin) {
-          console.log(isAdmin);
           if(isAdmin == false){
             alert("Please check that the user is a regular one!");
           }else{
             alert('User Logged In!');
+            sessionStorage.setItem('userID',user.uid);
             window.location = "./pages/admin.html";
           }
           
@@ -60,6 +60,7 @@ function login () {
           }else{
             // Login as normal user
             alert('User Logged In!');
+            sessionStorage.setItem('userID',user.uid);
             window.location = "./pages/dashboard.html";
           }
         }
