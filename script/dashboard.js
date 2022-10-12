@@ -26,6 +26,7 @@ let inputStatus = document.getElementById('taskStatus');
 // Variables 
 let task = null;
 let tasks = [];
+let users = [];
 let taskIndex = 0;
 let ƒ = sessionStorage.getItem('userID');
 let taskID = null;
@@ -78,11 +79,10 @@ function updateTask() {
 
     let tName = taskName.value;
     let tDesc = taskDesc.value;
-    let tStart = taskStart.value.toString();
-    let tEnd  = taskEnd.value.toString();
+    let tStart = taskStart.value;
+    let tEnd  = taskEnd.value;
     let tUser = taskUser.value;
     let tRate = taskRate.value;
-    let iHour = inputHour.value;
     let iStatus = inputStatus.value;
 
     if(iStatus==0){
@@ -95,36 +95,34 @@ function updateTask() {
 
          // Create task object
          task = {
+            
             name: tName,
             description: tDesc,
             status: iStatus,
             start_date: tStart,
             due_date: tEnd,
             user: {
-                id: users[tUser].id,
-                name: users[tUser].full_name
+                id: "",
+                name: ""
             },
             pay_rate: tRate,
-            time_tracked: [],
+            time_tracked: taskHoursInput,
             complete_date: "",
             created_by: ""
         };
+        console.log(task);
+
         
         // Store task object
-        database_ref.child('taks').push(task);
+        // database_ref.child('taks/'+'{'+taskID+'}').push(task);
 
-        // Clear inputs
-        clearInputs();
+        
 
         // Show alert (temporal solution)
-        alert("Task created.");
+        // alert("Task updated.");
     }
 
-    // 3 - create ref of DB
-    // 4 - perform update
-    // NOTE:
-    // to save the time we are using an array
-    // time_tracked : []
+    
 
 
 }
@@ -141,7 +139,7 @@ function setInputValues(userIndex) {
     taskStart.innerHTML = tempTask.start_date;
     taskEnd.innerHTML = tempTask.due_date;
     inputStatus.value = tempTask.status;
-    //taskUser.value = users.findIndex(x => x.id === tempTask.user.id);
+    taskUser.value = users.findIndex(x => x.id === tempTask.user.id);
     taskRate.innerHTML = tempTask.pay_rate;
 
     if(taskRate.hasOwnProperty('time_tracked')) {
