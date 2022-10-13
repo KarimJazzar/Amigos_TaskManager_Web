@@ -53,16 +53,10 @@ function login () {
             sessionStorage.setItem('userID',user.uid);
             window.location = "./pages/admin.html";
           }
-          
         } else {
-          if(isAdmin == true){
-          alert("Please check that the user is an admin!");
-          }else{
-            // Login as normal user
-            alert('User Logged In!');
-            sessionStorage.setItem('userID',user.uid);
-            window.location = "./pages/dashboard.html";
-          }
+          alert('User Logged In!');
+          sessionStorage.setItem('userID',user.uid);
+          window.location = "./pages/dashboard.html";
         }
       })
 
