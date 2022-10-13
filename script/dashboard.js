@@ -31,6 +31,7 @@ let taskIndex = 0;
 let ƒ = sessionStorage.getItem('userID');
 let taskID = null;
 let taskHoursInput = [];
+let userLoggedInID = sessionStorage.getItem('userID');
 
 (function() {
     
@@ -77,13 +78,16 @@ function updateTask() {
     //TODO 
     // check if the user is same
 
-    let tName = taskName.value;
-    let tDesc = taskDesc.value;
-    let tStart = taskStart.value;
-    let tEnd  = taskEnd.value;
-    let tUser = taskUser.value;
-    let tRate = taskRate.value;
-    let iStatus = inputStatus.value;
+    let tName = document.getElementById('taskName').textContent;
+    let tDesc = document.getElementById('taskDesc').textContent;
+    let tStart = document.getElementById('taskStart').textContent;
+    let tEnd  = document.getElementById('taskEnd').textContent;
+    let tUser = document.getElementById('taskUser').textContent;
+    let tRate = document.getElementById('taskRate').textContent;
+    let iStatus = document.getElementById('taskStatus').value;
+
+
+
 
     if(iStatus==0){
         alert("Please change the status of the task, if it's started");
@@ -109,17 +113,17 @@ function updateTask() {
             time_tracked: taskHoursInput,
             complete_date: "",
             created_by: ""
-        };
-        console.log(task);
+               };
+
 
         
         // Store task object
-        // database_ref.child('taks/'+'{'+taskID+'}').push(task);
+        database_ref.child('taks/'+taskID).set(task);
 
         
 
         // Show alert (temporal solution)
-        // alert("Task updated.");
+        alert("Task updated.");
     }
 
     
