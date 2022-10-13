@@ -94,10 +94,61 @@ function createTask() {
 
 // Update task function
 function updateTask() {
+
+    let tName = taskName.value;
+    let tDesc = taskDesc.value;
+    let tStart = taskStart.value;
+    let tEnd  = taskEnd.value;
+    let tUser = taskUser.value;
+    let tRate = taskRate.value;
+    let iStatus = inputStatus.value;
+
+    if(iStatus==0){
+        alert("Please change the status of the task, if it's started");
+    }
+    else {
+
+         // Create task object
+         task = {
+            
+            name: tName,
+            description: tDesc,
+            status: iStatus,
+            start_date: tStart,
+            due_date: tEnd,
+            user: {
+                id: "",
+                name: ""
+            },
+            pay_rate: tRate,
+            time_tracked: taskHoursInput,
+            complete_date: "",
+            created_by: ""
+        };
+        console.log(task);
+
     // TO - DO
     // 1 - validate all the fields as the create function
     // 2 - Create db reference
     // 3 - Perform the update, the endpot will be 'tasks/{taskID}'
+
+
+        
+        // Store task object
+        // database_ref.child('taks/'+'{'+taskID+'}').push(task);
+
+        
+        // alert("Task updated.");
+    }
+
+
+
+
+
+
+
+
+
 }
 
 // Delete task function
