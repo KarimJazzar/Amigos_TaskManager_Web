@@ -95,58 +95,58 @@ function createTask() {
 // Update task function
 function updateTask() {
 
+
+
+    // Get input values
     let tName = taskName.value;
     let tDesc = taskDesc.value;
-    let tStart = taskStart.value;
-    let tEnd  = taskEnd.value;
+    let tStart = taskStart.value.toString();
+    let tEnd  = taskEnd.value.toString();
     let tUser = taskUser.value;
     let tRate = taskRate.value;
-    let iStatus = inputStatus.value;
+    
+    // Check if all inputs are valid
+    let canUpdate = checkAllInputs(tName, tDesc, tStart, tEnd, tUser, tRate);
 
-    if(iStatus==0){
-        alert("Please change the status of the task, if it's started");
-    }
-    else {
+    // If inputs are valid store task
+    if(canUpdate) {
+        // Create DB ref
+        let database_ref = database.ref();
 
-         // Create task object
-         task = {
-            
+        // Create task object
+        task = {
             name: tName,
             description: tDesc,
-            status: iStatus,
+            status: 0,
             start_date: tStart,
             due_date: tEnd,
             user: {
-                id: "",
-                name: ""
+                id: users[tUser].id,
+                name: users[tUser].full_name
             },
             pay_rate: tRate,
-            time_tracked: taskHoursInput,
+            time_tracked: [],
             complete_date: "",
             created_by: ""
         };
+        
         console.log(task);
 
-    // TO - DO
-    // 1 - validate all the fields as the create function
-    // 2 - Create db reference
-    // 3 - Perform the update, the endpot will be 'tasks/{taskID}'
-
-
-        
         // Store task object
-        // database_ref.child('taks/'+'{'+taskID+'}').push(task);
+        //database_ref.child('taks/'+task).set(task);
+        database_ref.child('taks/'+ tasks[taskIndex].id).set(task);
 
-        
-        // alert("Task updated.");
+        // Clear inputs
+        clearInputs();
+
+        // Show alert (temporal solution)
+        alert("Task Updated!.");
     }
 
-
-
-
-
-
-
+   // TO - DO
+   // 1 - validate all the fields as the create function
+   // 2 - Create db reference
+   // 3 - Perform the update, the endpot will be 'tasks/{taskID}'
 
 
 }
