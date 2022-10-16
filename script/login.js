@@ -56,18 +56,10 @@ function login () {
             sessionStorage.setItem('userID',user.uid);
             window.location = "./pages/admin.html";
           }
-          
         } else {
-          if(isAdmin == true){
-          showSnackBar("Please check that the user is an admin!","orange");
-
-          }else{
-            // Login as normal user
-            showSnackBar('User Logged In!',"green");
-
-            sessionStorage.setItem('userID',user.uid);
-            window.location = "./pages/dashboard.html";
-          }
+          alert('User Logged In!');
+          sessionStorage.setItem('userID',user.uid);
+          window.location = "./pages/dashboard.html";
         }
       })
 

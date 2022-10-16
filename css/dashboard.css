@@ -256,37 +256,37 @@
 }
 
 .task-todo h1 {
-    color: #7A0FD6;
+    color: #F2D022;
 }
 
 .task-ongoing h1 {
-    color: #541CED;
+    color: #BDE038;
 }
 
 .task-complete h1 {
-    color: #114FF7;
+    color: #3eb9bb;
 }
 
 .task-todo svg:hover path {
-    fill: #7A0FD6;
+    fill: #F2D022;
 }
 
 .task-ongoing svg:hover path {
-    fill: #541CED;
+    fill: #BDE038;
 }
 
 .task-complete svg:hover path {
-    fill: #114FF7;
+    fill: #3eb9bb;
 }
 
 .task-todo .task-line {
-    background-color: #7A0FD6;
+    background-color: #F2D022;
 }
 
 .task-ongoing .task-line {
-    background-color: #541CED;
+    background-color: #BDE038;
 }
 
 .task-complete .task-line {
-    background-color: #114FF7;
+    background-color: #3eb9bb;
 }
