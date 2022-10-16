@@ -12,7 +12,7 @@ function login () {
   
     // Validate input fields
     if (validate_email(email) == false || validate_password(password) == false) {
-      alert('Email or Password is invalid')
+      showSnackBar('Email or Password is invalid',"orange");
       return
       // Don't continue running the code
     }
@@ -47,19 +47,24 @@ function login () {
 
         if(logAsAdmin) {
           if(isAdmin == false){
-            alert("Please check that the user is a regular one!");
+            
+            showSnackBar("Please check that the user is a regular one!","red");
+
           }else{
-            alert('User Logged In!');
+            showSnackBar('User Logged In!',"green");
+            
             sessionStorage.setItem('userID',user.uid);
             window.location = "./pages/admin.html";
           }
           
         } else {
           if(isAdmin == true){
-          alert("Please check that the user is an admin!");
+          showSnackBar("Please check that the user is an admin!","orange");
+
           }else{
             // Login as normal user
-            alert('User Logged In!');
+            showSnackBar('User Logged In!',"green");
+
             sessionStorage.setItem('userID',user.uid);
             window.location = "./pages/dashboard.html";
           }
@@ -73,7 +78,8 @@ function login () {
       let error_code = error.code
       let error_message = error.message
   
-      alert(error_message);
+      showSnackBar(error_message,"red");
+
     });
 }
 
@@ -89,4 +95,30 @@ function toggleUserType() {
   } else {
     userType.classList.remove('active');
   }
+}
+
+
+function showSnackBar(msg,colour) {
+  // Get the snackbar DIV
+  var x = document.getElementById("snackbar");
+
+  // Add the "show" class to DIV
+  x.className = "show";
+  x.textContent = msg;
+  
+  if(colour=="green"){
+      x.style.backgroundColor="#008f29";
+      x.style.color="#fff";
+  }
+  else if(colour=="orange"){
+      x.style.backgroundColor="#FFA500";
+      x.style.color="#000";
+
+  }else{
+    x.style.backgroundColor="#FF0000";
+    x.style.color="#fff";
+  }
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function(){ x.className = x.className.replace("show", msg); }, 3000);
 }

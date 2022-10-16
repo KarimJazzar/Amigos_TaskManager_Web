@@ -90,7 +90,8 @@ function updateTask() {
 
 
     if(iStatus==0){
-        alert("Please change the status of the task, if it's started");
+       
+        showSnackBar("Please change the status of the task, if it's started.","orange");
 
     }
     else {
@@ -123,7 +124,7 @@ function updateTask() {
         
 
         // Show alert (temporal solution)
-        alert("Task updated.");
+        showSnackBar("Task updated.","green");
     }
 
     
@@ -266,3 +267,29 @@ function signOut(){
         window.location = "../index.html";
     });
 }
+
+
+function showSnackBar(msg,colour) {
+    // Get the snackbar DIV
+    var x = document.getElementById("snackbar");
+  
+    // Add the "show" class to DIV
+    x.className = "show";
+    x.textContent = msg;
+    
+    if(colour=="green"){
+        x.style.backgroundColor="#008f29";
+        x.style.color="#fff";
+    }
+    else if(colour=="orange"){
+        x.style.backgroundColor="#FFA500";
+        x.style.color="#000";
+  
+    }else{
+      x.style.backgroundColor="#FF0000";
+      x.style.color="#fff";
+    }
+  
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", msg); }, 3000);
+  }

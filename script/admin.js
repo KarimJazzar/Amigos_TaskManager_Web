@@ -88,7 +88,7 @@ function createTask() {
         clearInputs();
 
         // Show alert (temporal solution)
-        alert("Task created.");
+        showSnackBar("Task updated.","green");
     }
 }
 
@@ -104,7 +104,8 @@ function updateTask() {
     let iStatus = inputStatus.value;
 
     if(iStatus==0){
-        alert("Please change the status of the task, if it's started");
+        showSnackBar("Please change the status of the task, if it's started.","orange");
+
     }
     else {
 
@@ -160,22 +161,22 @@ function deleteTask() {
 // Validate all inputs
 function checkAllInputs(tName, tDesc, tStart, tEnd, tUser, tRate) {
     if (validate_string(tName)) {
-        alert("Name can't by empty.");
+        showSnackBar("Name can't by empty.","orange");
         return false;
     } else if (validate_string(tDesc)) {
-        alert("Description can't by empty.");
+        showSnackBar("Description can't by empty.","orange");
         return false;
     } else if (validate_date(tStart)) {
-        alert("Start date is not valid.");
+        showSnackBar("Start date is not valid.","orange");
         return false;
     } else if (validate_date(tEnd) || validate_due_date(tStart, tEnd)) {
-        alert("Due date is not valid.");
+        showSnackBar("Due date is not valid.","orange");
         return false;
     } else if (validate_user(tUser)) {
-        alert("Task responsable can't be empty.");
+        showSnackBar("Task responsable can't be empty.","orange");
         return false;
     } else if (validate_number(tRate)) {
-        alert("Invalid pai rate.");
+        showSnackBar("Invalid pai rate.","orange");
         return false;
     } else {
         return true;
@@ -359,3 +360,29 @@ function signOut(){
         window.location = "../index.html";
     });
 }
+
+
+function showSnackBar(msg,colour) {
+    // Get the snackbar DIV
+    var x = document.getElementById("snackbar");
+  
+    // Add the "show" class to DIV
+    x.className = "show";
+    x.textContent = msg;
+    
+    if(colour=="green"){
+        x.style.backgroundColor="#008f29";
+        x.style.color="#fff";
+    }
+    else if(colour=="orange"){
+        x.style.backgroundColor="#FFA500";
+        x.style.color="#000";
+  
+    }else{
+      x.style.backgroundColor="#FF0000";
+      x.style.color="#fff";
+    }
+  
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", msg); }, 3000);
+  }
