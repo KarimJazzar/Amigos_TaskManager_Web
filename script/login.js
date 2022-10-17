@@ -51,15 +51,11 @@ function login () {
             showSnackBar("Please check that the user is a regular one!","red");
 
           }else{
-            showSnackBar('User Logged In!',"green");
-            
-            sessionStorage.setItem('userID',user.uid);
-            window.location = "./pages/admin.html";
+            goToPage("admin",user.uid);
+
           }
         } else {
-          alert('User Logged In!');
-          sessionStorage.setItem('userID',user.uid);
-          window.location = "./pages/dashboard.html";
+          goToPage("dashboard",user.uid);
         }
       })
 
@@ -113,4 +109,11 @@ function showSnackBar(msg,colour) {
 
   // After 3 seconds, remove the show class from DIV
   setTimeout(function(){ x.className = x.className.replace("show", msg); }, 3000);
+}
+
+
+function goToPage(pageName,user){
+          sessionStorage.setItem('userID',user);
+          window.location = "./pages/"+pageName+".html";
+
 }

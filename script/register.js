@@ -7,16 +7,25 @@ function register(){
     let password = document.getElementById('password').value;
     let full_name = document.getElementById('full_name').value;
   
+    
+
+    if (validate_field(full_name) == false){
+      showSnackBar('Full name is empty',"orange");
+      return;
+    }
+
     // Validate input fields
-    if (validate_email(email) == false || validate_password(password) == false) {
-      showSnackBar('Email or Password are invalid',"orange");
+    if (validate_email(email) == false) {
+      showSnackBar('Email is invalid',"orange");
       return;
       // Don't continue running the code
     }
 
-    if (validate_field(full_name) == false){
-      showSnackBar('Full name is invalid',"orange");
+    // Validate input fields
+    if (validate_password(password) == false) {
+      showSnackBar('Passwrod must be atleast 6 characters.',"orange");
       return;
+      // Don't continue running the code
     }
    
     // Move on with Auth

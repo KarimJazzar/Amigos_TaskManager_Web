@@ -28,10 +28,10 @@ let task = null;
 let tasks = [];
 let users = [];
 let taskIndex = 0;
-let ƒ = sessionStorage.getItem('userID');
 let taskID = null;
 let taskHoursInput = [];
 let userLoggedInID = sessionStorage.getItem('userID');
+
 
 (function() {
     
