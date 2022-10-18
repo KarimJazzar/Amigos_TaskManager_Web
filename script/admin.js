@@ -139,15 +139,9 @@ function updateTask() {
         // Clear inputs
         clearInputs();
 
-        // Show alert (temporal solution)
-        alert("Task Updated!.");
+        // Show alert
+        showSnackBar("Task Updated.","green");
     }
-
-   // TO - DO
-   // 1 - validate all the fields as the create function
-   // 2 - Create db reference
-   // 3 - Perform the update, the endpot will be 'tasks/{taskID}'
-
 
 }
 
@@ -193,8 +187,8 @@ function deleteTask() {
         // Clear inputs
         clearInputs();
 
-        // Show alert (temporal solution)
-        alert("Task Deleted!.");
+        // Show alert
+        showSnackBar("Task Deleted.","green");
     }
     
 
