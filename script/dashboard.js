@@ -31,7 +31,8 @@ let taskIndex = 0;
 let taskID = null;
 let taskHoursInput = [];
 let userLoggedInID = sessionStorage.getItem('userID');
-
+let welcom = document.querySelector('.welcome-msg');
+let navbar = document.querySelector('.user-container');
 
 (function() {
     
@@ -46,6 +47,13 @@ let userLoggedInID = sessionStorage.getItem('userID');
           }
         }
         document.getElementById('userFullName').textContent = userName;
+        document.getElementById('welcomUser').textContent = userName;
+        welcom.classList.add('active');
+
+        setInterval(() => {
+            navbar.classList.add('active');
+            welcom.classList.remove('active');
+        }, 500);
       })
 
 })();
