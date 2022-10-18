@@ -153,8 +153,51 @@ function updateTask() {
 
 // Delete task function
 function deleteTask() {
-    // TO - DO
-    // IN HOLD FOR NOW
+    let tName = taskName.value;
+    let tDesc = taskDesc.value;
+    let tStart = taskStart.value.toString();
+    let tEnd  = taskEnd.value.toString();
+    let tUser = taskUser.value;
+    let tRate = taskRate.value;
+    
+    // Check if all inputs are valid
+    let canDelete = checkAllInputs(tName, tDesc, tStart, tEnd, tUser, tRate);
+
+    // If inputs are valid store task
+    if(canDelete) {
+        // Create DB ref
+        let database_ref = database.ref();
+
+        // Create task object
+        task = {
+            name: tName,
+            description: tDesc,
+            status: 0,
+            start_date: tStart,
+            due_date: tEnd,
+            user: {
+                id: users[tUser].id,
+                name: users[tUser].full_name
+            },
+            pay_rate: tRate,
+            time_tracked: [],
+            complete_date: "",
+            created_by: ""
+        };
+        
+        console.log(task);
+
+        // Delete task object
+        database_ref.child('taks/'+ tasks[taskIndex].id).remove();
+
+        // Clear inputs
+        clearInputs();
+
+        // Show alert (temporal solution)
+        alert("Task Deleted!.");
+    }
+    
+
 }
 
 // Validate all inputs
