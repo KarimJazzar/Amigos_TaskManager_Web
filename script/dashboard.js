@@ -18,6 +18,7 @@ let taskRate  = document.getElementById('taskRate');
 let hoursList = document.getElementById('taskHoursList');
 let hoursTotal = document.getElementById('taskTotalHour');
 let taskCreator = document.getElementById('taskCreator');
+let taskComplete = document.getElementById('taskComplete');
 
 // All inputs
 let inputHour = document.getElementById('taskHours');
@@ -34,100 +35,82 @@ let userLoggedInID = sessionStorage.getItem('userID');
 let welcom = document.querySelector('.welcome-msg');
 let navbar = document.querySelector('.user-container');
 
-(function() {
-    
-    let firebaseRef = firebase.database().ref("users");
-      firebaseRef.once("value", function(snapshot){
-        let userName = "";
-        let data = snapshot.val();
-        for(let i in data){
-          if(i == userLoggedInID){
-            userName = data[i].full_name;
-            break;
-          }
-        }
-        document.getElementById('userFullName').textContent = userName;
-        document.getElementById('welcomUser').textContent = userName;
-        welcom.classList.add('active');
-
-        setInterval(() => {
-            navbar.classList.add('active');
-            welcom.classList.remove('active');
-        }, 500);
-      })
-
-})();
-
 //add worked hours
-
 function addHours(){
+    let tempHour = inputHour.value;
 
-    hoursList.innerHTML = "";
-    taskHoursInput.push(inputHour.value);
+    if (validate_number(tempHour)) {
+        showSnackBar("Invalid hour.","orange");
+    } else {
+        if(taskHoursInput.length <= 0 && tasks[taskIndex].time_tracked == "") {
+            hoursList.innerHTML = "";
+        }
 
-        for (var i = 0; i < taskHoursInput.length; i++) {
-            // Create DOM element
-            var li = document.createElement('li');
-                
-            // Set text of element
-            li.textContent = taskHoursInput[i];
-        
-            // Append this element to its parent
-            hoursList.appendChild(li);
-          } 
-
-    inputHour.value = "";
+        taskHoursInput.push(tempHour);
     
+        // Create DOM element
+        var li = document.createElement('li');
+                    
+        // Set text of element
+        li.textContent = tempHour;
+    
+        // Append this element to its parent
+        hoursList.appendChild(li);
+        
+        inputHour.value = "";
+    }
 }
 
 // Update task
 function updateTask() {
     // Get input values
-    let tName = document.getElementById('taskName').textContent;
-    let tDesc = document.getElementById('taskDesc').textContent;
-    let tStart = document.getElementById('taskStart').textContent;
-    let tEnd  = document.getElementById('taskEnd').textContent;
-    let tUser = document.getElementById('taskUser').textContent;
-    let tRate = document.getElementById('taskRate').textContent;
     let iStatus = document.getElementById('taskStatus').value;
+    iStatus = parseInt(iStatus);
 
-    if (iStatus == 0) {
-        showSnackBar("Please change the status of the task, if it's started.","orange");
+    if (taskHoursInput.length > 0 && iStatus == 0) {
+        showSnackBar("Can only add time if task is ongoing.","orange");
     } else {
          // Create DB ref
          let database_ref = database.ref();
 
          // Create task object
-         task = {
-            name: tName,
-            description: tDesc,
+         let task = {
+            name: tasks[taskIndex].name,
+            description: tasks[taskIndex].description,
             status: iStatus,
-            start_date: tStart,
-            due_date: tEnd,
-            user: {
-                id: "",
-                name: ""
-            },
-            pay_rate: tRate,
-            time_tracked: taskHoursInput,
-            complete_date: "",
-            created_by: ""
-               };
+            start_date: tasks[taskIndex].start_date,
+            due_date: tasks[taskIndex].due_date,
+            user: tasks[taskIndex].user,
+            pay_rate: tasks[taskIndex].pay_rate,
+            time_tracked: tasks[taskIndex].time_tracked,
+            complete_date: tasks[taskIndex].complete_date,
+            created_by: tasks[taskIndex].created_by,
+        };
 
+        if(taskHoursInput.length > 0) {
+            if(task.time_tracked != "") {
+                task.time_tracked += "," + taskHoursInput.toString();
+            } else {
+                task.time_tracked = taskHoursInput.toString();
+            }
+        }
 
+        if(iStatus == 2) {
+            task.complete_date = "" + new Date().toISOString().slice(0, 10);
+        } else {
+            task.complete_date = "";
+        }
+
+        console.log(task);
         
-        // Store task object
+        // Update task object
         database_ref.child('taks/'+taskID).set(task);
 
-        
+        taskHoursInput = [];
 
         // Show alert (temporal solution)
         showSnackBar("Task updated.","green");
     }
-
-    
-
-
 }
 
 // Load task data for edit mode
@@ -142,15 +125,32 @@ function setInputValues(userIndex) {
     taskStart.innerHTML = tempTask.start_date;
     taskEnd.innerHTML = tempTask.due_date;
     inputStatus.value = tempTask.status;
-    taskUser.value = users.findIndex(x => x.id === tempTask.user.id);
+    taskUser.innerHTML = tempTask.user.name;
     taskRate.innerHTML = tempTask.pay_rate;
+    taskCreator.innerHTML = tempTask.created_by;
 
-    if(taskRate.hasOwnProperty('time_tracked')) {
-            // for (var i = 0; i < tempTask.time_tracked.length; i++){ 
-            //     hoursList.innerHTML = "";
-            //     hoursList.appendChild(tempTask.time_tracked);
-            // }
+    if(tempTask.complete_date != "") {
+        taskComplete.innerHTML = tempTask.complete_date;
+    } else {
+        taskComplete.innerHTML = "YYYY-MM-DD";
+    }
 
+    if(tempTask.time_tracked != "") {
+        hoursList.innerHTML = "";
+
+        let tempHours = tempTask.time_tracked.split(",");
+
+        let total = 0;
+        for (let i = 0; i < tempHours.length; i++) {
+            let noHour = document.createElement('li');
+            noHour.innerHTML = tempHours[i];
+
+            hoursList.appendChild(noHour);
+        
+            total += parseFloat(tempHours[i]);
+        }
+
+        hoursTotal.innerHTML = total;
     } else {
         let noHour = document.createElement('li');
         noHour.innerHTML = "No Time Posted";
@@ -237,6 +237,7 @@ function loadTasks() {
         });
 
         displayTask();
+        setInputValues(taskIndex);
     });
 }
 
@@ -252,13 +253,6 @@ function hideSideBard() {
 function setDashboardEvents() {
     closeSideBar.addEventListener('click', hideSideBard);
 }
-
-function initDashboard() {
-    loadTasks();
-    setDashboardEvents();
-}
-
-initDashboard();
 
 function signOut(){
     auth.signOut().then(() => {
@@ -290,4 +284,37 @@ function showSnackBar(msg,colour) {
   
     // After 3 seconds, remove the show class from DIV
     setTimeout(function(){ x.className = x.className.replace("show", msg); }, 3000);
-  }
+}
+
+function getLogedUser() {
+    let firebaseRef = firebase.database().ref("users");
+
+    firebaseRef.once("value", function(snapshot){
+        let userName = "";
+        let data = snapshot.val();
+
+        for(let i in data){
+            if(i == userLoggedInID){
+                userName = data[i].full_name;
+                break;
+            }
+        }
+
+        document.getElementById('userFullName').textContent = userName;
+        document.getElementById('welcomUser').textContent = userName;
+        welcom.classList.add('active');
+
+        setInterval(() => {
+            navbar.classList.add('active');
+            welcom.classList.remove('active');
+        }, 500);
+    })
+}
+
+function initDashboard() {
+    getLogedUser();
+    loadTasks();
+    setDashboardEvents();
+}
+
+initDashboard();

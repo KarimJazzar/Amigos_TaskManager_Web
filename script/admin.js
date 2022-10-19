@@ -26,34 +26,10 @@ let task = null;
 let tasks = [];
 let users = [];
 let taskIndex = 0;
+let logedUser = null;
 let userLoggedInID = sessionStorage.getItem('userID');
 let welcom = document.querySelector('.welcome-msg');
 let navbar = document.querySelector('.user-container');
-
-function getLogedUser() {
-    let firebaseRef = firebase.database().ref("users");
-
-    firebaseRef.once("value", function(snapshot){
-        let userName = "";
-        let data = snapshot.val();
-
-        for(let i in data){
-            if(i == userLoggedInID){
-                userName = data[i].full_name;
-                break;
-            }
-        }
-
-        document.getElementById('userFullName').textContent = userName;
-        document.getElementById('welcomUser').textContent = userName;
-        welcom.classList.add('active');
-
-        setInterval(() => {
-            navbar.classList.add('active');
-            welcom.classList.remove('active');
-        }, 500);
-    })
-}
 
 // Create task function
 function createTask() {
@@ -85,9 +61,9 @@ function createTask() {
                 name: users[tUser].full_name
             },
             pay_rate: tRate,
-            time_tracked: [],
+            time_tracked: "",
             complete_date: "",
-            created_by: ""
+            created_by: logedUser
         };
         
         // Store task object
@@ -131,14 +107,10 @@ function updateTask() {
                 name: users[tUser].full_name
             },
             pay_rate: tRate,
-            time_tracked: [],
+            time_tracked: tasks[taskIndex].time_tracked,
             complete_date: tasks[taskIndex].complete_date,
             created_by: tasks[taskIndex].created_by
         };
-
-        if(tasks[taskIndex].hasOwnProperty('time_tracked')) {
-            task.time_tracked = tasks[taskIndex].time_tracked;
-        }
         
         console.log(task);
 
@@ -208,9 +180,22 @@ function setInputValues(userIndex) {
     taskUser.value = users.findIndex(x => x.id === tempTask.user.id);
     taskRate.value = tempTask.pay_rate;
 
-    if(taskRate.hasOwnProperty('time_tracked')) {
-        // TO - DO
-        // Wait until user can push time
+    if(tempTask.time_tracked != "") {
+        hoursList.innerHTML = "";
+
+        let tempHours = tempTask.time_tracked.split(",");
+
+        let total = 0;
+        for (let i = 0; i < tempHours.length; i++) {
+            let noHour = document.createElement('li');
+            noHour.innerHTML = tempHours[i];
+
+            hoursList.appendChild(noHour);
+        
+            total += parseFloat(tempHours[i]);
+        }
+
+        hoursTotal.innerHTML = total;
     } else {
         let noHour = document.createElement('li');
         noHour.innerHTML = "No Time Posted";
@@ -389,6 +374,32 @@ function showSnackBar(msg,colour) {
   
     // After 3 seconds, remove the show class from DIV
     setTimeout(function(){ x.className = x.className.replace("show", msg); }, 3000);
+}
+
+function getLogedUser() {
+    let firebaseRef = firebase.database().ref("users");
+
+    firebaseRef.once("value", function(snapshot){
+        let userName = "";
+        let data = snapshot.val();
+
+        for(let i in data){
+            if(i == userLoggedInID){
+                userName = data[i].full_name;
+                break;
+            }
+        }
+
+        logedUser = userName;
+        document.getElementById('userFullName').textContent = userName;
+        document.getElementById('welcomUser').textContent = userName;
+        welcom.classList.add('active');
+
+        setInterval(() => {
+            navbar.classList.add('active');
+            welcom.classList.remove('active');
+        }, 500);
+    })
 }
 
 function initAdmin() {
