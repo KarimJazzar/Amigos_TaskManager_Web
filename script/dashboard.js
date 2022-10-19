@@ -82,10 +82,7 @@ function addHours(){
 
 // Update task
 function updateTask() {
-
-    //TODO 
-    // check if the user is same
-
+    // Get input values
     let tName = document.getElementById('taskName').textContent;
     let tDesc = document.getElementById('taskDesc').textContent;
     let tStart = document.getElementById('taskStart').textContent;
@@ -94,21 +91,14 @@ function updateTask() {
     let tRate = document.getElementById('taskRate').textContent;
     let iStatus = document.getElementById('taskStatus').value;
 
-
-
-
-    if(iStatus==0){
-       
+    if (iStatus == 0) {
         showSnackBar("Please change the status of the task, if it's started.","orange");
-
-    }
-    else {
+    } else {
          // Create DB ref
          let database_ref = database.ref();
 
          // Create task object
          task = {
-            
             name: tName,
             description: tDesc,
             status: iStatus,

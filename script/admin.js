@@ -30,17 +30,18 @@ let userLoggedInID = sessionStorage.getItem('userID');
 let welcom = document.querySelector('.welcome-msg');
 let navbar = document.querySelector('.user-container');
 
-(function() {
-    
+function getLogedUser() {
     let firebaseRef = firebase.database().ref("users");
-      firebaseRef.once("value", function(snapshot){
+
+    firebaseRef.once("value", function(snapshot){
         let userName = "";
         let data = snapshot.val();
+
         for(let i in data){
-          if(i == userLoggedInID){
-            userName = data[i].full_name;
-            break;
-          }
+            if(i == userLoggedInID){
+                userName = data[i].full_name;
+                break;
+            }
         }
 
         document.getElementById('userFullName').textContent = userName;
@@ -51,9 +52,8 @@ let navbar = document.querySelector('.user-container');
             navbar.classList.add('active');
             welcom.classList.remove('active');
         }, 500);
-      })
-
-})();
+    })
+}
 
 // Create task function
 function createTask() {
@@ -103,9 +103,6 @@ function createTask() {
 
 // Update task function
 function updateTask() {
-
-
-
     // Get input values
     let tName = taskName.value;
     let tDesc = taskDesc.value;
@@ -126,7 +123,7 @@ function updateTask() {
         task = {
             name: tName,
             description: tDesc,
-            status: 0,
+            status: tasks[taskIndex].status,
             start_date: tStart,
             due_date: tEnd,
             user: {
@@ -135,9 +132,13 @@ function updateTask() {
             },
             pay_rate: tRate,
             time_tracked: [],
-            complete_date: "",
-            created_by: ""
+            complete_date: tasks[taskIndex].complete_date,
+            created_by: tasks[taskIndex].created_by
         };
+
+        if(tasks[taskIndex].hasOwnProperty('time_tracked')) {
+            task.time_tracked = tasks[taskIndex].time_tracked;
+        }
         
         console.log(task);
 
@@ -146,61 +147,28 @@ function updateTask() {
         database_ref.child('taks/'+ tasks[taskIndex].id).set(task);
 
         // Clear inputs
-        clearInputs();
+        //clearInputs();
 
         // Show alert
         showSnackBar("Task Updated.","green");
     }
-
 }
 
 // Delete task function
 function deleteTask() {
-    let tName = taskName.value;
-    let tDesc = taskDesc.value;
-    let tStart = taskStart.value.toString();
-    let tEnd  = taskEnd.value.toString();
-    let tUser = taskUser.value;
-    let tRate = taskRate.value;
-    
-    // Check if all inputs are valid
-    let canDelete = checkAllInputs(tName, tDesc, tStart, tEnd, tUser, tRate);
+    // Create DB ref
+    let database_ref = database.ref();
 
-    // If inputs are valid store task
-    if(canDelete) {
-        // Create DB ref
-        let database_ref = database.ref();
+    // Delete task object
+    database_ref.child('taks/'+ tasks[taskIndex].id).remove();
 
-        // Create task object
-        task = {
-            name: tName,
-            description: tDesc,
-            status: 0,
-            start_date: tStart,
-            due_date: tEnd,
-            user: {
-                id: users[tUser].id,
-                name: users[tUser].full_name
-            },
-            pay_rate: tRate,
-            time_tracked: [],
-            complete_date: "",
-            created_by: ""
-        };
-        
-        console.log(task);
+    // Remove edit mode
+    showSideBard()
+    // Clear inputs
+    clearInputs();
 
-        // Delete task object
-        database_ref.child('taks/'+ tasks[taskIndex].id).remove();
-
-        // Clear inputs
-        clearInputs();
-
-        // Show alert
-        showSnackBar("Task Deleted.","green");
-    }
-    
-
+    // Show alert
+    showSnackBar("Task Deleted.","green");
 }
 
 // Validate all inputs
@@ -392,20 +360,11 @@ function hideSideBard() {
     btnCreate.classList.remove('active');
 }
 
-function initAdmin() {
-    setAdminEvents();
-    loadUsers();
-    loadTasks();
-}
-
-initAdmin();
-
-function signOut(){
+function signOut() {
     auth.signOut().then(() => {
         window.location = "../index.html";
     });
 }
-
 
 function showSnackBar(msg,colour) {
     // Get the snackbar DIV
@@ -430,4 +389,13 @@ function showSnackBar(msg,colour) {
   
     // After 3 seconds, remove the show class from DIV
     setTimeout(function(){ x.className = x.className.replace("show", msg); }, 3000);
-  }
+}
+
+function initAdmin() {
+    getLogedUser();
+    setAdminEvents();
+    loadUsers();
+    loadTasks();
+}
+
+initAdmin();
