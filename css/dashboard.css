@@ -325,3 +325,8 @@
 .task-complete .task-line {
     background-color: #3eb9bb;
 }
+
+.task-user-board h1,
+.task-user-board strong label {
+    color: #F2D022;
+}

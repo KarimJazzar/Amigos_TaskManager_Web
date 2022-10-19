@@ -121,7 +121,7 @@ function setInputValues(userIndex) {
     let tempTask = tasks[userIndex];
     //getting current task id
     taskID = tempTask.id;
-    
+
     taskName.innerHTML = tempTask.name;
     taskDesc.innerHTML = tempTask.description;
     taskStart.innerHTML = tempTask.start_date;
@@ -183,6 +183,7 @@ function displayTask() {
     taskCols[1].innerHTML = "";
     taskCols[2].innerHTML = "";
 
+
     // Loop trougth all task
     for(let i = 0; i < tasks.length; i++) {
         // Temp value for current Task
@@ -196,7 +197,7 @@ function displayTask() {
         let tempLine = document.createElement('span');
         tempLine.className = "task-line";
         tempDad.appendChild(tempLine);
-
+        
         // Create H1 for task name
         let headH1 = document.createElement('h1');
         headH1.innerHTML = tempTask.name;
