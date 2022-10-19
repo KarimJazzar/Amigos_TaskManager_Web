@@ -161,7 +161,7 @@ function checkAllInputs(tName, tDesc, tStart, tEnd, tUser, tRate) {
         showSnackBar("Task responsable can't be empty.","orange");
         return false;
     } else if (validate_number(tRate)) {
-        showSnackBar("Invalid pai rate.","orange");
+        showSnackBar("Invalid pay rate.","orange");
         return false;
     } else {
         return true;
