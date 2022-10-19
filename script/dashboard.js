@@ -34,6 +34,7 @@ let taskHoursInput = [];
 let userLoggedInID = sessionStorage.getItem('userID');
 let welcom = document.querySelector('.welcome-msg');
 let navbar = document.querySelector('.user-container');
+let btnUpdate = document.getElementById('btnUpdateUser');
 
 //add worked hours
 function addHours(){
@@ -128,6 +129,14 @@ function setInputValues(userIndex) {
     taskUser.innerHTML = tempTask.user.name;
     taskRate.innerHTML = tempTask.pay_rate;
     taskCreator.innerHTML = tempTask.created_by;
+
+    if(userLoggedInID == tempTask.user.id) {
+        btnUpdate.style.opacity = 1;
+        btnUpdate.style.pointerEvents = "auto";
+    } else {
+        btnUpdate.style.opacity = 0.2;
+        btnUpdate.style.pointerEvents = "none";
+    }
 
     if(tempTask.complete_date != "") {
         taskComplete.innerHTML = tempTask.complete_date;
