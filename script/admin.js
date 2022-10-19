@@ -1,21 +1,21 @@
 "use strict";
 
 // CRUD buttons
-let btnCreate = document.getElementById('btnCreate');
-let taskContainer = document.getElementById('taskContainer');
-let closeSideBar = document.getElementById('closeSideBar');
+const btnCreate = document.getElementById('btnCreate');
+const taskContainer = document.getElementById('taskContainer');
+const closeSideBar = document.getElementById('closeSideBar');
 
 // Sidebar and Tasks grid
-let taskCrud = document.getElementById('taskCrud');
-let taskCols = document.querySelectorAll('.task-stack');
+const taskCrud = document.getElementById('taskCrud');
+const taskCols = document.querySelectorAll('.task-stack');
 
 // All CRUD inputs
-let taskName = document.getElementById('taskName');
-let taskDesc = document.getElementById('taskDesc');
-let taskStart  = document.getElementById('dateStart');
-let taskEnd  = document.getElementById('dateEnd');
-let taskUser  = document.getElementById('userList');
-let taskRate  = document.getElementById('taskRate');
+const taskName = document.getElementById('taskName');
+const taskDesc = document.getElementById('taskDesc');
+const taskStart  = document.getElementById('dateStart');
+const taskEnd  = document.getElementById('dateEnd');
+const taskUser  = document.getElementById('userList');
+const taskRate  = document.getElementById('taskRate');
 
 //  No editable content
 let hoursList = document.getElementById('taskHoursList');
@@ -27,9 +27,11 @@ let tasks = [];
 let users = [];
 let taskIndex = 0;
 let logedUser = null;
-let userLoggedInID = sessionStorage.getItem('userID');
-let welcom = document.querySelector('.welcome-msg');
-let navbar = document.querySelector('.user-container');
+const userLoggedInID = sessionStorage.getItem('userID');
+const welcom = document.querySelector('.welcome-msg');
+const navbar = document.querySelector('.user-container');
+const taskCost = document.getElementById('taskCost');
+const taskTotalCost = document.getElementById('taskTotalCost');
 
 // Create task function
 function createTask() {
@@ -196,6 +198,7 @@ function setInputValues(userIndex) {
         }
 
         hoursTotal.innerHTML = total;
+        taskCost.innerHTML = "$" + (total * parseFloat(tempTask.pay_rate));
     } else {
         let noHour = document.createElement('li');
         noHour.innerHTML = "No Time Posted";
@@ -204,6 +207,7 @@ function setInputValues(userIndex) {
         hoursList.appendChild(noHour);
         
         hoursTotal.innerHTML = 0;
+        taskCost.innerHTML = "$0.00";
     }
 }
 
@@ -224,10 +228,23 @@ function displayTask() {
     taskCols[1].innerHTML = "";
     taskCols[2].innerHTML = "";
 
+    let finalTotal = 0;
+    
     // Loop trougth all task
     for(let i = 0; i < tasks.length; i++) {
         // Temp value for current Task
         let tempTask = tasks[i];
+
+        let taskTotal = 0;
+
+        if(tempTask.status == 2 && tempTask.time_tracked != "") {
+            let tempHours = tempTask.time_tracked.split(",");
+            for (let i = 0; i < tempHours.length; i++) {
+                taskTotal += parseFloat(tempHours[i]);
+            }
+        }
+
+        finalTotal += (tempTask.pay_rate * taskTotal);
 
         // Create card container
         let tempDad = document.createElement('div');
@@ -274,6 +291,12 @@ function displayTask() {
 
         taskCols[tempTask.status].appendChild(tempDad);
     }
+
+    taskTotalCost.textContent = finalTotal;
+}
+
+function calculateTotalCost() {
+
 }
 
 function loadUsers() {

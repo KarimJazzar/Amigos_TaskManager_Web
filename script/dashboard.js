@@ -36,6 +36,8 @@ let welcom = document.querySelector('.welcome-msg');
 let navbar = document.querySelector('.user-container');
 let btnUpdate = document.getElementById('btnUpdateUser');
 let btnAddHours = document.getElementById('btnAddHours');
+let taskCost = document.getElementById('taskCost');
+const taskTotalCost = document.getElementById('taskTotalCost');
 
 //add worked hours
 function addHours(){
@@ -165,6 +167,7 @@ function setInputValues(userIndex) {
         }
 
         hoursTotal.innerHTML = total;
+        taskCost.innerHTML = "$" + (total * parseFloat(tempTask.pay_rate));
     } else {
         let noHour = document.createElement('li');
         noHour.innerHTML = "No Time Posted";
@@ -173,6 +176,7 @@ function setInputValues(userIndex) {
         hoursList.appendChild(noHour);
         
         hoursTotal.innerHTML = 0;
+        taskCost.innerHTML = "$0.00";
     }
 }
 
@@ -184,10 +188,23 @@ function displayTask() {
     taskCols[2].innerHTML = "";
 
 
+    let finalTotal = 0;
+
     // Loop trougth all task
     for(let i = 0; i < tasks.length; i++) {
         // Temp value for current Task
         let tempTask = tasks[i];
+
+        let taskTotal = 0;
+
+        if(tempTask.status == 2 && tempTask.time_tracked != "") {
+            let tempHours = tempTask.time_tracked.split(",");
+            for (let i = 0; i < tempHours.length; i++) {
+                taskTotal += parseFloat(tempHours[i]);
+            }
+        }
+
+        finalTotal += (tempTask.pay_rate * taskTotal);
 
         // Create card container
         let tempDad = document.createElement('div');
@@ -234,6 +251,8 @@ function displayTask() {
 
         taskCols[tempTask.status].appendChild(tempDad);
     }
+
+    taskTotalCost.textContent = finalTotal;
 }
 
 function loadTasks() {

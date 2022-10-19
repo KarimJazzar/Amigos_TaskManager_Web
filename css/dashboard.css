@@ -330,3 +330,12 @@
 .task-user-board strong label {
     color: #F2D022;
 }
+.task-total-cost {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 20px;
+    padding: 0 20px 20px 0;
+    margin: 0;
+    color: #fff;
+}
